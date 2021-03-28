@@ -12,7 +12,8 @@
     "baseUrl": "./src",                // 指定匯入檔案的基準路徑
     "esModuleInterop": true,           // 兼容模組
     "experimentalDecorators": true,    // 啟用裝飾器
-    "emitDecoratorMetadata": true      // 提供裝飾器 metadata
+    "emitDecoratorMetadata": true,     // 提供裝飾器 metadata
+    "noImplicitAny": false // <-----
   },
   "include": ["src/**/*.ts"],          // 納入編譯範圍
   "exclude": ["node_modules", "dist"]  //不納入編譯範圍
