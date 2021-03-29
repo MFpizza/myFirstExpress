@@ -15,6 +15,6 @@
     "emitDecoratorMetadata": true,     // 提供裝飾器 metadata
     "noImplicitAny": false // <-----
   },
-  "include": ["src/**/*.ts"],          // 納入編譯範圍
+  "include": ["src/**/*.ts", "src/models/user/user.model.js"],          // 納入編譯範圍
   "exclude": ["node_modules", "dist"]  //不納入編譯範圍
 }

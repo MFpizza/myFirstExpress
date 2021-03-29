@@ -1,6 +1,8 @@
 import express from "express";
 const router = express.Router();
 
+import { UserModel } from "../models/user";
+
 router.post("/test", express.json(), (req, res, next) => {
   console.log(JSON.stringify(req.body));
   res.send(JSON.stringify(req.body));
@@ -8,6 +10,44 @@ router.post("/test", express.json(), (req, res, next) => {
 
 router.get("/error", (req, res, next) => {
   next("error page.");
+});
+
+//TODO CRUD
+//* C: Create 
+router.post('/user/create', express.json(), (req, res, next) => {
+  const { username, email } = req.body;
+  const user = new UserModel({ username, email });
+  const data = user.save();
+  res.send(data);
+});
+
+//* R: Read
+router.get('/users/read', (req, res, next) => {
+  //find 也可以用
+  const documents = UserModel.findOne({ username: req.query.username });
+  res.send(documents);
+});
+
+//* U: Update
+//! 只會更新 不會取得更新後的值
+router.patch('/users/:id', express.json(),(req, res, next) => {
+  UserModel.updateOne({ _id: req.params.id }, { username: req.body.username }, { runValidators: true });
+  res.send('成功');
+});
+//! 會回傳更新後的值
+router.patch('/users/:id', express.json(), (req, res, next) => {
+  const options: QueryFindOneAndUpdateOptions = {
+    new: true,
+    runValidators: true
+  };
+  const document = UserModel.findByIdAndUpdate(req.params.id, { username: req.body.username }, options);
+  res.send(document);
+});
+
+//* D: delete
+router.delete('/users/:id', (req, res, next) => {
+  UserModel.findByIdAndRemove(req.params.id);
+  res.send('刪除成功');
 });
 
 router.get("/data/error", (req, res, next) => {
