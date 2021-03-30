@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-
+import mongoose from 'mongoose';
 import { UserModel } from "../models/user";
 
 router.post("/test", express.json(), (req, res, next) => {
@@ -34,15 +34,16 @@ router.patch('/users/:id', express.json(),(req, res, next) => {
   UserModel.updateOne({ _id: req.params.id }, { username: req.body.username }, { runValidators: true });
   res.send('成功');
 });
+
 //! 會回傳更新後的值
-router.patch('/users/:id', express.json(), (req, res, next) => {
-  const options: QueryFindOneAndUpdateOptions = {
-    new: true,
-    runValidators: true
-  };
-  const document = UserModel.findByIdAndUpdate(req.params.id, { username: req.body.username }, options);
-  res.send(document);
-});
+// router.patch('/users/:id', express.json(), (req, res, next) => {
+//   const options: FindOneAndUpdateOptions = {
+//     new: true,
+//     runValidators: true
+//   };
+//   const document = UserModel.findByIdAndUpdate(req.params.id, { username: req.body.username }, options);
+//   res.send(document);
+// });
 
 //* D: delete
 router.delete('/users/:id', (req, res, next) => {
